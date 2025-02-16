@@ -1,47 +1,58 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Светофор</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>replit</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
-    <div class="container">
-        
-        <div class="road">
-            <div class="white_color" data="1"></div>
-            <div class="black_color"></div>
-            <div class="white_color"></div>
-            <div class="black_color"></div>
-            <div class="white_color"></div>
-            <div class="black_color"></div>
-            <div class="white_color"></div>
-            <div class="black_color"></div>
-        </div>
-
+    <div class="main_content">
         <div class="light">
-            <div class="green light-color"></div>
-            <div class="red light-color active"></div>
+            <div class='circle' id='green'></div>
+            <div class='circle active' id='red'></div>
         </div>
-
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <h2>Выберите направление</h2>
-                <label>
-                    <input type="radio" name="direction" value="up"> Вверх
-                </label>
-                <br>
-                <label>
-                    <input type="radio" name="direction" value="down"> Вниз
-                </label>
-                <br>
-                <button id="submitDirection">Отправить</button>
+        <div class="content">
+            <div class="road">
+                <div class="white-stripe" data="1"></div>
+                <div class="black-stripe"></div>
+                <div class="white-stripe"></div>
+                <div class="black-stripe"></div>
+                <div class="white-stripe"></div>
+                <div class="black-stripe"></div>
+                <div class="white-stripe"></div>
+                <div class="black-stripe"></div>
             </div>
         </div>
-        
-        <button id="openModalBtn">Идти</button>
+        <button class='go'>Идти</button>
     </div>
+    <div class="container">
+        <div class="modal">
+            <div class="modal_header">
+                <span class="header_text">Logo</span>
+                <div class="header_close"></div>
+            </div>
+            <form action="" class="modal_form">
+                <div class="radio-buttons">
+                    <div>
+                        <input type='radio' checked name="direction" value='up' class="up">Вверх
+                    </div>
+                    <div>
+                        <input type='radio' name="direction" value='down' class="down">Вниз
+                    </div>
+                </div>
+                <div class="modal_submit">
+                    <button type='submit' class="submit_button">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="https://replit.com/public/js/replit-badge.js" theme="blue" defer></script>
 </body>
+
 </html>
