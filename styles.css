@@ -1,91 +1,180 @@
+html,
 body {
-    background-color: whitesmoke;
-    width: min-content;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
-.container {
-    display: flex;
-}
-
-.white_color {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    width: 250px;
-    height: 50px;
-}
-
-.white_color.red {
-
-    background-color: red;
-}
-
-.black_color {
-    width: 250px;
-    height: 50px;
-}
-
-.image {
-    width: 20px;
-    height: auto;
-}
-
-.buttons {
-    width: max-content;
-    display: flex;
-    flex-direction: column;
-}
-
-.light {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 50px;
-    height: 150px;
-    margin-left: 20px;
-}
-
-.light-color {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+.circle {
     background-color: gray;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
 }
 
-.light .active {
-    background-color: red;
-}
-
-.light .green.active {
+#green.active {
     background-color: green;
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
+#red.active {
+    background-color: red;
+}
+
+.road {
+    margin-right: 10px;
+    width: fit-content;
+    border: 2px solid gray;
+    transition: 0.5s ease-in-out;
+}
+
+.road.red {
+    background: red;
+
+}
+
+.content {
+    margin: 0 0 0 20px;
+}
+
+.black-stripe,
+.white-stripe {
+    width: 250px;
+    height: 50px;
+}
+
+.white-stripe {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.black-stripe {
+    background-color: black;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.6);
     width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding-top: 60px;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s ease-in-out;
 }
 
-.modal-content {
-    background-color: white;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 400px;
+.container.active {
+    opacity: 1;
+    visibility: visible;
 }
 
-#openModalBtn {
-    height: 10%;
-    margin-left: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
+.modal {
+    position: relative;
+    width: 300px;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 7px;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+
+.modal.active {
+    opacity: 1;
+}
+
+.modal_form {
+    padding: 30px 10px;
+
+}
+
+.modal_name,
+.modal_surname {
+    width: 300px;
+    border: 2px solid rgba(80, 80, 80, 0.7);
+    border-radius: 6px;
+    padding: 5px 10px;
+    display: block;
+}
+
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0 0 10px;
+}
+
+.header_text {
+    font-family: 'Caveat', cursive;
+    font-size: 30px;
+}
+
+.header_close {
+    width: 30px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+}
+
+.header_close::after,
+.header_close::before {
+    position: absolute;
+    content: '';
+    width: 15px;
+    background-color: #000;
+    height: 2px;
+    display: block;
+    transition: 0.7s ease-in-out;
+}
+
+.header_close::after {
+    transform: rotate(-45deg);
+}
+
+.header_close::before {
+    transform: rotate(45deg);
+}
+
+.modal_submit {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.submit_button {
+    background-color: black;
+    border: none;
+    padding: 7px;
+    color: white;
+    border-radius: 9px;
+    transition: 0.7s ease-in-out;
     cursor: pointer;
+}
+
+.submit_button:hover {
+    background-color: white;
+    color: black;
+}
+
+.header_close:hover.header__close::after {
+    transform: rotate(315deg);
+}
+
+.header_close:hover.header__close::before {
+    transform: rotate(225deg);
+}
+
+.main_content {
+    display: flex
+}
+
+.go {
+    height: fit-content;
+}
+
+img {
+    width: 20px;
+    height: auto;
 }
