@@ -1,126 +1,103 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const crosswalk = {
-        road: document.querySelector(".road"),
-        roadElements: document.querySelectorAll('.road > div'),
-        white: document.querySelectorAll('.white_color'),
-        modal: document.getElementById("modal"),
-        openModalBtn: document.getElementById("openModalBtn"),
-        submitDirectionBtn: document.getElementById("submitDirection"),
-        greenLight: document.querySelector(".green"),
-        zebraInterval: null,
+let light = document.querySelector('.light')
+let go = document.querySelector('.go')
+let container = document.querySelector('.container')
+let modal = document.querySelector('.modal')
+let submit_button = document.querySelector('.submit_button')
+let form = document.querySelector('form')
+let white = document.querySelectorAll('.white-stripe');
 
+const crosswalk = {
+    container: container,
+    modal: modal,
+    form: form,
+    white: white,
 
-        init() {
-            this.road.style.border = "2px solid black";
-            
-            this.roadElements.forEach((element) => {
-                if (element.classList.contains('black_color')) {
-                    element.style.backgroundColor = 'black';
-                }
-            });
+    close() {
+        console.log(this.container)
+        this.container.classList.remove('active')
+        this.modal.classList.remove('active')
+    },
 
-            this.addEventListeners();
-        },
+    changeTheLight(lightCircle) {
 
-        changeTheLight(e) {
-            if (e.previousElementSibling) {
-                e.previousElementSibling.classList.remove('active');
-            } else if (e.nextElementSibling) {
-                e.nextElementSibling.classList.remove('active');
+        if (lightCircle.previousElementSibling) {
+            lightCircle.previousElementSibling.classList.remove('active')
+        } else {
+            lightCircle.nextElementSibling.classList.remove('active')
+        }
+
+        lightCircle.classList.add('active')
+
+    },
+
+    openModal() {
+        this.container.classList.add('active')
+        this.modal.classList.add('active')
+        this.container.addEventListener('click', function(e) {
+            if (!e.target.closest('.modal')) {
+                crosswalk.close()
             }
+        })
+        let close_icon = document.querySelector('.header_close')
+        close_icon.addEventListener('click', function() { crosswalk.close() })
+    },
 
-            e.classList.add('active');
-        },
+    goThroughTheLight() {
 
-        startZebraFlashing() {
-            let toggleRed = true;
+        let green = document.querySelector('#green')
 
-            this.zebraInterval = setInterval(() => {
-                document.querySelectorAll('.white_color').forEach((element) => {
-                    if (toggleRed) {
-                        element.classList.add('red');
-                    } else {
-                        element.classList.remove('red');
-                    }
-                });
-
-                toggleRed = !toggleRed;
+        if (green.classList.contains('active')) {
+            this.openModal()
+        } else {
+            let road = document.querySelector('.road')
+            let interval = setInterval(function() {
+                road.classList.toggle('red')
             }, 300);
 
-            setTimeout(() => {
-                clearInterval(this.zebraInterval);
-                document.querySelectorAll('.white_color').forEach((element) => {
-                    element.classList.remove('red');
-                });
-            }, 2000);
-        },
-
-        openModal() {
-            this.modal.style.display = "block";
-        },
-
-        closeModal() {
-            this.modal.style.display = "none";
-        },
-
-        checkGreenLight() {
-            if (this.greenLight.classList.contains('active')) {
-                this.openModal();
-            } else {
-                this.startZebraFlashing();
-            }
-        },
-
-        submitDirection(event) {
-            event.preventDefault();
-
-            const selectedDirection = document.querySelector('input[name="direction"]:checked');
-            
-            if (selectedDirection) {
-                const direction = selectedDirection.value;
-
-                this.white.forEach((element) => {
-                    element.innerHTML = '';
-                });
-
-                this.white.forEach((element) => {
-                    let image = document.createElement('IMG');
-                    if (direction === 'up') {
-                        image.src = 'up.svg';
-                    } else {
-                        image.src = 'up.svg';
-                        image.style.transform = 'rotate(180deg)';
-                    }
-                    element.append(image);
-                });
-
-                this.modal.style.display = "none";
-            }
-        },
-
-        addEventListeners() {
-            this.openModalBtn.addEventListener("click", () => {
-                this.checkGreenLight();
-            });
-
-            this.submitDirectionBtn.addEventListener("click", (event) => {
-                this.submitDirection(event);
-            });
-
-            window.onclick = (event) => {
-                if (event.target === this.modal) {
-                    this.closeModal();
-                }
-            };
-
-            const lightContainer = document.querySelector('.light');
-            lightContainer.addEventListener('click', (e) => {
-                if (e.target && e.target.classList.contains('light-color')) {
-                    this.changeTheLight(e.target);
-                }
-            });
+            setTimeout(() => clearInterval(interval), 2000)
         }
-    };
+    },
 
-    crosswalk.init();
-});
+    submitDirection() {
+
+        let data = new FormData(this.form);
+        let direction = ''
+
+        for (const entry of data) {
+            direction = entry[1]
+        };
+
+        if (direction == 'up') {
+            for (let i = 0; i < this.white.length; i++) {
+                this.white[i].innerHTML = '';
+                let image = document.createElement('IMG');
+                image.src = 'Upward.svg'
+                this.white[i].append(image)
+            }
+        } else {
+            for (let i = 0; i < this.white.length; i++) {
+                this.white[i].innerHTML = '';
+                let image = document.createElement('IMG');
+                image.src = 'Upward.svg';
+                image.style.transform = 'rotate(180deg)';
+                this.white[i].append(image);
+            }
+        }
+
+    },
+
+}
+
+go.addEventListener('click', function() {
+    crosswalk.goThroughTheLight();
+})
+
+light.addEventListener('click', function(e) {
+    crosswalk.changeTheLight(e.target);
+})
+
+submit_button.addEventListener('click', function(e) {
+    e.preventDefault();
+    crosswalk.submitDirection();
+    crosswalk.close();
+})
